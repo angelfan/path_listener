@@ -9,20 +9,32 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'path_listener'
+gem 'path_listener', github: 'angelfan/path_listener'
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install path_listener
-
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+# config/application.rb
+class Application < Rails::Application
+  config.middleware.use PathListener::Middleware
+end
+```
+
+```ruby
+# config/initializers/path_listener.rb
+PathListener::Listener.new do
+  get '/:city/hotel/:id' do |params|
+    Rails.logger.info 'listen this url with params'
+    Rails.logger.info params
+  end
+end
+```
+
 
 ## Development
 
